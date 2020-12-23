@@ -7,8 +7,9 @@ app.config["DEBUG"] = True
 questions = [{'text': 'What equals 4x4?',
 		'answer': '16'}]
 
+# Handle PUT and GET for all questions
 @app.route('/Questions', methods=['PUT', 'GET'])
-def get_questions():
+def get_put_question():
 	if request.method=='GET':
 		return jsonify(questions)
 	if request.method=='PUT':
@@ -16,15 +17,20 @@ def get_questions():
 		answer = request.json['answer']
 		questions.append({'text': text,
 				'answer': answer})
-		return jsonify(questions)
+		return questions
 
-@app.route('/Questions/<int:id>', methods=['GET'])
-def get_question_entry(id):
-	if id>len(questions)-1:
-		return 'Entry not Found/n'
-	return jsonify(questions[id])
-
-#@route('/Questions/<int:id>', methods=['GET'])
+# Handle POST and GET for entry
+@app.route('/Questions/<int:id>', methods=['POST', 'GET'])
+def get_post_question_entry(id):
+	if id>len(questions)-1: # return last entry if id is out of range
+		id = len(questions)-1
+	if request.method=='GET':
+		return jsonify(questions[id])
+	if request.method=='POST':
+		text = request.json['text']
+		answer = request.json['answer']
+		questions[id] = {'text': text,'answer': answer}
+		return jsonify(questions[id])
 
 if __name__=='__main__':
 	app.run(port=8888)
