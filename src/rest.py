@@ -13,12 +13,11 @@ def get_put_question():
     if request.method=='GET':
         return jsonify(questions)
     if request.method=='PUT':
-        print(request)
-        # text = request.json['text']
-        # answer = request.json['answer']
-        # questions.append({'text': text,
-        #         'answer': answer})
-        return questions
+        text = request.json['text']
+        answer = request.json['answer']
+        questions.append({'text': text,
+                'answer': answer})
+        return jsonify(questions)
 
 # Handle POST and GET for entry
 @app.route('/Questions/<int:id>', methods=['POST', 'GET'])
