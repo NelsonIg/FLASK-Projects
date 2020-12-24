@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import requests, json
-
+import random as rd
+from html import unescape
 # =============================================================================
 # Functions that send requests to rest.py
 # =============================================================================
+def get_trivia_question():
+	resp = requests.get('http://localhost:8888/OpenTriviaDB')
+	return resp.json()
+
 def get_questions():
 	# get all questions from API
 	resp = requests.get('http://localhost:8888/Questions')
@@ -32,7 +38,8 @@ def post_question(idx: int, text: str, answer: str):
 # Functions controlling the Quiz
 # =============================================================================
 def print_menu():
-    print('1: Start Quiz\n'+
+    print('0: Open Trivia API Quiz\n'+
+        '1: Start Quiz\n'+
         '2: Add Question\n'+
         '3: View Questions\n'+
         '4: Edit Question\n'+ 
@@ -78,11 +85,25 @@ def edit_question():
     print('\nQuestion:\n')
     print(q)
     print('\n')
-    
+
+def start_trivia_quiz():
+    for rnd in range(1,6):
+        question = get_trivia_question()
+        print(f'Question {rnd} of 6: ')
+        print(unescape(question['question']))
+        options = question['incorrect_answers'] + [question['correct_answer']]
+        rd.shuffle(options)
+        for opt in options:
+            print(opt)
+        inp = input('[YOU]: ')
+        print(inp == question['correct_answer'], '\nCorrect answer is:' ,question['correct_answer'])
+
 def main():
     while True:
         print_menu()
         inp = input('[YOU]: ')
+        if inp == '0':
+            start_trivia_quiz()
         if inp == '1':
             start_quiz()
         if inp == '2':
