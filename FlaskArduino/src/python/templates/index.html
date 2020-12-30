@@ -8,8 +8,12 @@
     <title>Document</title>
 </head>
 <body>
+    <h1> Built in LED</h1>
     <button type="button" onclick=led_on()>ON</button>
     <button type="button" onclick=led_off()>OFF</button>
+    <h1> Pin 11</h1>
+    <button type="button" onclick=pin_on()>ON</button>
+    <button type="button" onclick=pin_off()>OFF</button>
 </body>
 <script>
         function led_on()
@@ -24,6 +28,23 @@
     {
       var request = new XMLHttpRequest();
       var url = '/LED/0';
+      request.open("POST", url, true);
+      request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      request.send();
+    }
+
+            function pin_on()
+    {
+      var request = new XMLHttpRequest();
+      var url = '/write_digital/11/1';
+      request.open("POST", url, true);
+      request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      request.send();
+    }
+        function pin_off()
+    {
+      var request = new XMLHttpRequest();
+      var url = '/write_digital/11/0';
       request.open("POST", url, true);
       request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
       request.send();

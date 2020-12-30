@@ -1,6 +1,6 @@
 from pyfirmata2 import Arduino
-
-
+import pyfirmata2
+global pin
 def board_connect(port):
     """ e.g.: port='COM3' or Arduino.AUTODETECT"""
     board = Arduino(port)
@@ -17,6 +17,18 @@ def board_exit(board):
 def write_led(board, state: int):
     """ Set state of builtin LED"""
     board.digital[13].write(state)
+
+def write_digital(board, _pin, state):
+    global pin
+    try:
+        pin = board.get_pin('d:11:p')
+    except pyfirmata2.pyfirmata2.PinAlreadyTakenError:
+        pass
+    if state == 1:
+        pin.write(0.1)
+    else:
+        board.digital[_pin].write(state)
+
 
 def main():
     print('Connecting...')

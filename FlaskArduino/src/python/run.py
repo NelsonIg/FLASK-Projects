@@ -13,6 +13,9 @@ def write_led(state: int):
     s = rpd_client('localhost', 8000)
     return s.write_led(state)
 
+def write_digital(pin, state: int):
+    s = rpd_client('localhost', 8000)
+    return s.write_digital(pin, state)
 
 @app.route('/')
 def index():
@@ -23,6 +26,12 @@ def index():
 def led(state):
     resp = write_led(state)
     return f'LED set to {state}'
+
+
+@app.route('/write_digital/<int:pin>/<int:state>', methods=['GET', 'POST'])
+def write_pin(pin, state):
+    resp = write_digital(pin, state)
+    return f'Pin {pin} set to {state}'
 
 
 if __name__ == '__main__':
