@@ -1,0 +1,9 @@
+click==7.1.2
+Flask==1.1.2
+itsdangerous==1.1.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+pyFirmata2==2.1.0
+pypi-xmlrpc==2020.12.3
+pyserial==3.5
+Werkzeug==1.0.1

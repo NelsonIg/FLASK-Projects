@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button type="button" onclick=led_on()>ON</button>
+    <button type="button" onclick=led_off()>OFF</button>
+</body>
+<script>
+        function led_on()
+    {
+      var request = new XMLHttpRequest();
+      var url = '/LED/1';
+      request.open("POST", url, true);
+      request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      request.send();
+    }
+        function led_off()
+    {
+      var request = new XMLHttpRequest();
+      var url = '/LED/0';
+      request.open("POST", url, true);
+      request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      request.send();
+    }
+</script>
+</html>
